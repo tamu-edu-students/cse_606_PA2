@@ -1,16 +1,53 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Movies" %>
 
-<h1>Movies</h1>
+<main class="page-shell">
+  <header class="page-heading">
+    <p class="eyebrow">The collection</p>
+    <h1>Movies</h1>
+    <p class="page-intro">Browse the films and sort the collection by any column.</p>
+  </header>
 
-<div id="movies">
-  <% @movies.each do |movie| %>
-    <%= render movie %>
-    <p>
-      <%= link_to "Show this movie", movie %>
-    </p>
+  <% if notice %>
+    <p class="notice" role="status"><%= notice %></p>
   <% end %>
-</div>
 
-<%= link_to "New movie", new_movie_path %>
+  <section class="panel movie-list" id="movies">
+    <div class="table-scroll">
+      <table class="movie-table">
+        <thead>
+          <tr>
+            <% [["title", "Title"], ["rating", "Rating"], ["release_date", "Release date"]].each do |column, label| %>
+              <% active = @sort_column == column %>
+              <% aria_sort = active ? (@sort_direction == "asc" ? "ascending" : "descending") : "none" %>
+              <% next_direction = active && @sort_direction == "asc" ? "desc" : "asc" %>
+              <th class="<%= "sorted-column-#{@sort_direction}" if active %>" aria-sort="<%= aria_sort %>">
+                <%= link_to label, movies_path(sort: column, direction: next_direction) %>
+                <% if active %>
+                  <span class="sort-indicator" aria-hidden="true"><%= @sort_direction == "asc" ? "↑" : "↓" %></span>
+                  <span class="visually-hidden">Sorted <%= @sort_direction == "asc" ? "ascending" : "descending" %></span>
+                <% end %>
+              </th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @movies.each do |movie| %>
+            <tr>
+              <td class="<%= "sorted-column-#{@sort_direction}" if @sort_column_index == 1 %>"><%= link_to movie.title, movie %></td>
+              <td class="<%= "sorted-column-#{@sort_direction}" if @sort_column_index == 2 %>"><%= movie.rating %></td>
+              <td class="<%= "sorted-column-#{@sort_direction}" if @sort_column_index == 3 %>"><%= movie.release_date %></td>
+            </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3"><%= pluralize(@movies.size, "movie") %></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div class="panel-actions">
+      <%= link_to "Add a movie", new_movie_path, class: "button-link" %>
+    </div>
+  </section>
+</main>

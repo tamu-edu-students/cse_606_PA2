@@ -1,11 +1,17 @@
 <% content_for :title, "New movie" %>
 
-<h1>New movie</h1>
+<main class="page-shell">
+  <header class="page-heading">
+    <p class="eyebrow">Expand the collection</p>
+    <h1>New movie</h1>
+    <p class="page-intro">Add a film and its details to the collection.</p>
+  </header>
 
-<%= render "form", movie: @movie %>
+  <section class="panel form-panel">
+    <%= render "form", movie: @movie %>
+  </section>
 
-<br>
-
-<div>
-  <%= link_to "Back to movies", movies_path %>
-</div>
+  <nav class="page-navigation" aria-label="Movie navigation">
+    <%= link_to "← Back to movies", movies_path %>
+  </nav>
+</main>

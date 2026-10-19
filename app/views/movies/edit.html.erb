@@ -1,12 +1,18 @@
 <% content_for :title, "Editing movie" %>
 
-<h1>Editing movie</h1>
+<main class="page-shell">
+  <header class="page-heading">
+    <p class="eyebrow">Update the collection</p>
+    <h1>Editing movie</h1>
+    <p class="page-intro">Make changes to this film's details.</p>
+  </header>
 
-<%= render "form", movie: @movie %>
+  <section class="panel form-panel">
+    <%= render "form", movie: @movie %>
+  </section>
 
-<br>
-
-<div>
-  <%= link_to "Show this movie", @movie %> |
-  <%= link_to "Back to movies", movies_path %>
-</div>
+  <nav class="page-navigation" aria-label="Movie navigation">
+    <%= link_to "View movie", @movie %>
+    <%= link_to "← Back to movies", movies_path %>
+  </nav>
+</main>

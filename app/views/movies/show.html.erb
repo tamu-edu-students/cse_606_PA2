@@ -1,10 +1,21 @@
-<p style="color: green"><%= notice %></p>
+<main class="page-shell">
+  <% if notice %>
+    <p class="notice" role="status"><%= notice %></p>
+  <% end %>
 
-<%= render @movie %>
+  <header class="page-heading">
+    <p class="eyebrow">From the collection</p>
+    <h1><%= @movie.title %></h1>
+    <p class="page-intro">Movie details</p>
+  </header>
 
-<div>
-  <%= link_to "Edit this movie", edit_movie_path(@movie) %> |
-  <%= link_to "Back to movies", movies_path %>
+  <section class="panel movie-detail">
+    <%= render @movie %>
+  </section>
 
-  <%= button_to "Destroy this movie", @movie, method: :delete %>
-</div>
+  <nav class="page-navigation" aria-label="Movie actions">
+    <%= link_to "Edit movie", edit_movie_path(@movie), class: "button-link" %>
+    <%= link_to "← Back to movies", movies_path %>
+    <%= button_to "Remove movie", @movie, method: :delete, class: "button-link button-danger" %>
+  </nav>
+</main>
